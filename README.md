@@ -97,6 +97,25 @@ Open:
 http://localhost:4200/
 ```
 
+## Public GitHub Pages Deployment
+
+This repository includes a GitHub Actions workflow at `.github/workflows/deploy-pages.yml`.
+
+After pushing to GitHub:
+
+1. Open the repository on GitHub.
+2. Go to `Settings` > `Pages`.
+3. Set `Source` to `GitHub Actions`.
+4. Push to the `main` branch, or run the workflow manually from the `Actions` tab.
+
+The public frontend URL will be:
+
+```text
+https://navin0815.github.io/Resume-Analyzer/
+```
+
+Important: do not commit a real Groq API key to a public repository. For a production public app, route Groq requests through a backend proxy or serverless function and keep the key as a server-side secret. The Angular environment file is suitable for local academic demos only.
+
 ## Build
 
 Create a production build:
