@@ -1,0 +1,11 @@
+.app-shell {
+	min-height: 100vh;
+	background: #f8fafc;
+	color: #172033;
+	transition: background 180ms ease, color 180ms ease;
+}
+
+:host(.dark-theme) .app-shell {
+	background: #0f172a;
+	color: #f8fafc;
+}

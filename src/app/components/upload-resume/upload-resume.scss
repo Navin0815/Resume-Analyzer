@@ -1,0 +1,114 @@
+.upload-card {
+  border: 1px solid rgba(37, 99, 235, 0.14);
+  border-radius: 8px;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
+}
+
+.drop-zone {
+  display: grid;
+  min-height: 290px;
+  place-items: center;
+  padding: 2rem;
+  border: 2px dashed rgba(37, 99, 235, 0.28);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(239, 246, 255, 0.9), rgba(240, 253, 250, 0.62));
+  text-align: center;
+  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.drop-zone.dragging,
+.drop-zone:hover {
+  border-color: #0f766e;
+  transform: translateY(-2px);
+  background: rgba(240, 253, 250, 0.95);
+}
+
+.drop-zone > mat-icon {
+  width: 58px;
+  height: 58px;
+  color: #2563eb;
+  font-size: 58px;
+}
+
+h2 {
+  margin: 0.85rem 0 0.35rem;
+  color: #172033;
+  font-size: 1.55rem;
+}
+
+p {
+  max-width: 420px;
+  margin: 0 0 1.25rem;
+  color: #64748b;
+}
+
+.file-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 1rem 0;
+  color: #0f766e;
+  font-weight: 800;
+}
+
+.error-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 0.9rem;
+  border: 1px solid rgba(185, 28, 28, 0.18);
+  border-radius: 8px;
+  background: #fef2f2;
+}
+
+.error-panel > div {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.error-panel mat-icon {
+  color: #b91c1c;
+}
+
+.error-panel p {
+  margin: 0;
+  color: #991b1b;
+  font-weight: 700;
+}
+
+:host-context(.dark-theme) .upload-card {
+  border-color: rgba(255, 255, 255, 0.09);
+  background: #111827;
+}
+
+:host-context(.dark-theme) .drop-zone {
+  border-color: rgba(45, 212, 191, 0.28);
+  background: rgba(15, 23, 42, 0.78);
+}
+
+:host-context(.dark-theme) h2 {
+  color: #f8fafc;
+}
+
+:host-context(.dark-theme) p {
+  color: #94a3b8;
+}
+
+:host-context(.dark-theme) .error-panel {
+  border-color: rgba(248, 113, 113, 0.24);
+  background: rgba(127, 29, 29, 0.28);
+}
+
+:host-context(.dark-theme) .error-panel p {
+  color: #fecaca;
+}
+
+@media (max-width: 560px) {
+  .error-panel {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,81 @@
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow">Groq powered resume intelligence</span>
+    <h1>AI Resume Analyzer</h1>
+    <p>
+      Upload a PDF resume, extract its content, and get a professional dashboard with scoring, ATS guidance,
+      skill gaps, and career recommendations.
+    </p>
+    <div class="hero-metrics" aria-label="Analyzer features">
+      <span><strong>PDF</strong> extraction</span>
+      <span><strong>ATS</strong> checks</span>
+      <span><strong>AI</strong> recommendations</span>
+    </div>
+  </div>
+</section>
+
+<main class="workspace">
+  <section class="input-grid" aria-label="Resume upload and preview">
+    <app-upload-resume
+      [selectedFileName]="selectedFileName()"
+      [progress]="progress()"
+      [loading]="loading()"
+      [error]="error()"
+      (fileSelected)="analyzeFile($event)"
+      (retryRequested)="retryAnalysis()"
+    ></app-upload-resume>
+
+    <app-resume-preview [fileName]="selectedFileName()" [resumeText]="resumeText()"></app-resume-preview>
+  </section>
+
+  @if (loading()) {
+    <app-loading-spinner message="Extracting resume text and asking Groq AI for a structured review..."></app-loading-spinner>
+  }
+
+  @if (analysis()) {
+    <app-analysis-dashboard
+      [analysis]="analysis()"
+      (copyRequested)="copySuggestions()"
+      (downloadRequested)="downloadReport()"
+    ></app-analysis-dashboard>
+  } @else if (!loading()) {
+    <mat-card class="empty-dashboard">
+      <mat-card-content>
+        <mat-icon aria-hidden="true">dashboard_customize</mat-icon>
+        <div>
+          <h2>Your analysis dashboard is ready when you are</h2>
+          <p>Upload a text-based PDF resume to generate scorecards, ATS tips, missing keywords, and recommendations.</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (history().length) {
+    <section class="history-section" aria-label="Resume analysis history">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Recent reports</span>
+          <h2>Resume history</h2>
+        </div>
+        <button mat-stroked-button type="button" (click)="clearHistory()">
+          <mat-icon aria-hidden="true">delete_sweep</mat-icon>
+          Clear
+        </button>
+      </div>
+
+      <div class="history-grid">
+        @for (item of history(); track item.id) {
+          <mat-card class="history-card" role="button" tabindex="0" (click)="restoreHistory(item)" (keydown.enter)="restoreHistory(item)">
+            <mat-card-content>
+              <div>
+                <h3>{{ item.fileName }}</h3>
+                <p>{{ item.analyzedAt }}</p>
+              </div>
+              <span>{{ item.resumeScore }}/100</span>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    </section>
+  }
+</main>

@@ -1,0 +1,142 @@
+@if (analysis(); as result) {
+  <section class="dashboard" aria-label="AI resume analysis results">
+    <div class="section-title">
+      <div>
+        <span class="eyebrow">AI Analysis</span>
+        <h2>Resume performance dashboard</h2>
+      </div>
+
+      <div class="actions">
+        <button mat-stroked-button type="button" (click)="copyRequested.emit()">
+          <mat-icon aria-hidden="true">content_copy</mat-icon>
+          Copy Tips
+        </button>
+        <button mat-flat-button type="button" color="primary" (click)="downloadRequested.emit()">
+          <mat-icon aria-hidden="true">download</mat-icon>
+          Report PDF
+        </button>
+      </div>
+    </div>
+
+    <div class="score-grid">
+      <app-score-card label="Resume Score" [value]="result.resumeScore" description="Overall quality, clarity, and role alignment."></app-score-card>
+      <app-score-card label="ATS Score" [value]="result.atsScore" accent="teal" description="Keyword coverage and parsing readiness."></app-score-card>
+    </div>
+
+    <mat-card class="summary-card">
+      <mat-card-content>
+        <h3>Executive Summary</h3>
+        <p>{{ result.summary }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="insight-grid">
+      <mat-card>
+        <mat-card-header>
+          <mat-icon mat-card-avatar aria-hidden="true">psychology</mat-icon>
+          <mat-card-title>Technical skills found</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          @if (result.technicalSkillsFound.length) {
+            <mat-chip-set aria-label="Technical skills found">
+              @for (skill of result.technicalSkillsFound; track skill) {
+                <mat-chip>{{ skill }}</mat-chip>
+              }
+            </mat-chip-set>
+          } @else {
+            <p class="empty">No technical skills were detected.</p>
+          }
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+          <mat-icon mat-card-avatar aria-hidden="true">search_off</mat-icon>
+          <mat-card-title>Missing keywords</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ul>
+            @for (item of result.missingImportantSkills; track item) {
+              <li>{{ item }}</li>
+            } @empty {
+              <li>No missing keywords were returned.</li>
+            }
+          </ul>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+          <mat-icon mat-card-avatar aria-hidden="true">rule</mat-icon>
+          <mat-card-title>ATS optimization</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ul>
+            @for (item of result.atsOptimizationSuggestions; track item) {
+              <li>{{ item }}</li>
+            } @empty {
+              <li>No ATS recommendations were returned.</li>
+            }
+          </ul>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+          <mat-icon mat-card-avatar aria-hidden="true">tips_and_updates</mat-icon>
+          <mat-card-title>Resume improvements</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ul>
+            @for (item of result.resumeImprovementRecommendations; track item) {
+              <li>{{ item }}</li>
+            } @empty {
+              <li>No improvement recommendations were returned.</li>
+            }
+          </ul>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+          <mat-icon mat-card-avatar aria-hidden="true">trending_up</mat-icon>
+          <mat-card-title>Career suggestions</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ul>
+            @for (item of result.careerSuggestions; track item) {
+              <li>{{ item }}</li>
+            } @empty {
+              <li>No career suggestions were returned.</li>
+            }
+          </ul>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+          <mat-icon mat-card-avatar aria-hidden="true">balance</mat-icon>
+          <mat-card-title>Strengths and weaknesses</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h4>Strengths</h4>
+          <ul>
+            @for (item of result.strengths; track item) {
+              <li>{{ item }}</li>
+            } @empty {
+              <li>No strengths were returned.</li>
+            }
+          </ul>
+          <h4>Weaknesses</h4>
+          <ul>
+            @for (item of result.weaknesses; track item) {
+              <li>{{ item }}</li>
+            } @empty {
+              <li>No weaknesses were returned.</li>
+            }
+          </ul>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+}

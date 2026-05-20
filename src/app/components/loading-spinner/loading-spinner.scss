@@ -1,0 +1,17 @@
+.loading-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: 8px;
+  background: rgba(239, 246, 255, 0.88);
+  color: #1e3a8a;
+  font-weight: 700;
+}
+
+:host-context(.dark-theme) .loading-card {
+  border-color: rgba(45, 212, 191, 0.28);
+  background: rgba(15, 23, 42, 0.72);
+  color: #ccfbf1;
+}

@@ -1,0 +1,47 @@
+.score-card {
+  height: 100%;
+  border: 1px solid rgba(37, 99, 235, 0.14);
+  border-radius: 8px;
+  box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+}
+
+.score-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+span {
+  color: #64748b;
+  font-weight: 800;
+}
+
+strong {
+  color: #2563eb;
+  font-size: 1.8rem;
+}
+
+p {
+  margin: 0.9rem 0 0;
+  color: #64748b;
+}
+
+.teal strong {
+  color: #0f766e;
+}
+
+.amber strong {
+  color: #b45309;
+}
+
+:host-context(.dark-theme) .score-card {
+  border-color: rgba(255, 255, 255, 0.09);
+  background: #111827;
+}
+
+:host-context(.dark-theme) span,
+:host-context(.dark-theme) p {
+  color: #94a3b8;
+}

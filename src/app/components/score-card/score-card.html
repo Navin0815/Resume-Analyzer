@@ -1,0 +1,12 @@
+<mat-card class="score-card" [class.teal]="accent() === 'teal'" [class.amber]="accent() === 'amber'">
+  <mat-card-content>
+    <div class="score-header">
+      <span>{{ label() }}</span>
+      <strong>{{ normalizedValue() }}/100</strong>
+    </div>
+    <mat-progress-bar mode="determinate" [value]="normalizedValue()"></mat-progress-bar>
+    @if (description()) {
+      <p>{{ description() }}</p>
+    }
+  </mat-card-content>
+</mat-card>

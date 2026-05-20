@@ -1,0 +1,20 @@
+<mat-toolbar class="navbar">
+  <a class="brand" routerLink="/" aria-label="AI Resume Analyzer home">
+    <span class="brand-mark">
+      <mat-icon aria-hidden="true">auto_awesome</mat-icon>
+    </span>
+    <span>AI Resume Analyzer</span>
+  </a>
+
+  <span class="spacer"></span>
+
+  <button
+    mat-icon-button
+    type="button"
+    [attr.aria-label]="darkMode() ? 'Switch to light mode' : 'Switch to dark mode'"
+    [matTooltip]="darkMode() ? 'Light mode' : 'Dark mode'"
+    (click)="toggleDarkMode()"
+  >
+    <mat-icon aria-hidden="true">{{ darkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+  </button>
+</mat-toolbar>

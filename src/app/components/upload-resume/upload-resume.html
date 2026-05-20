@@ -1,0 +1,48 @@
+<mat-card class="upload-card">
+  <mat-card-content>
+    <div
+      class="drop-zone"
+      [class.dragging]="isDragging()"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave()"
+      (drop)="onDrop($event)"
+    >
+      <mat-icon aria-hidden="true">upload_file</mat-icon>
+      <h2>Upload resume PDF</h2>
+      <p>Drag a PDF here or choose a file to start the AI analysis.</p>
+
+      <input #fileInput type="file" accept="application/pdf,.pdf" hidden (change)="onFileInputChange($event)" />
+      <button mat-flat-button type="button" color="primary" [disabled]="loading()" (click)="fileInput.click()">
+        <mat-icon aria-hidden="true">description</mat-icon>
+        Choose PDF
+      </button>
+    </div>
+
+    @if (selectedFileName()) {
+      <div class="file-row">
+        <mat-icon aria-hidden="true">picture_as_pdf</mat-icon>
+        <span>{{ selectedFileName() }}</span>
+      </div>
+    }
+
+    @if (loading()) {
+      <mat-progress-bar mode="determinate" [value]="progress()"></mat-progress-bar>
+    }
+
+    @if (error()) {
+      <div class="error-panel" role="alert">
+        <div>
+          <mat-icon aria-hidden="true">error_outline</mat-icon>
+          <p>{{ error() }}</p>
+        </div>
+
+        @if (selectedFileName() && !loading()) {
+          <button mat-stroked-button type="button" color="primary" (click)="retryRequested.emit()">
+            <mat-icon aria-hidden="true">refresh</mat-icon>
+            Retry
+          </button>
+        }
+      </div>
+    }
+  </mat-card-content>
+</mat-card>
