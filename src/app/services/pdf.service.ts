@@ -8,7 +8,7 @@ type PdfTextItem = {
 @Injectable({ providedIn: 'root' })
 export class PdfService {
   constructor() {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.mjs', import.meta.url).toString();
+    pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.mjs', document.baseURI).toString();
   }
 
   async extractTextFromPdf(file: File): Promise<string> {
