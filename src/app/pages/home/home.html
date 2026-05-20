@@ -15,6 +15,40 @@
 </section>
 
 <main class="workspace">
+  <mat-card class="api-key-card">
+    <mat-card-content>
+      <div class="api-key-copy">
+        <mat-icon aria-hidden="true">{{ apiKeyConfigured() ? 'verified_user' : 'vpn_key' }}</mat-icon>
+        <div>
+          <span class="eyebrow">GroqCloud setup</span>
+          <h2>{{ apiKeyConfigured() ? 'API key ready' : 'Add your Groq API key' }}</h2>
+          <p>
+            The public GitHub Pages app keeps your key in this browser only. It is not committed to the repository.
+          </p>
+        </div>
+      </div>
+
+      <div class="api-key-actions">
+        <mat-form-field appearance="outline">
+          <mat-label>Groq API key</mat-label>
+          <input #groqApiKeyInput matInput type="password" autocomplete="off" placeholder="gsk_..." />
+        </mat-form-field>
+
+        <button mat-flat-button type="button" color="primary" (click)="saveGroqApiKey(groqApiKeyInput.value); groqApiKeyInput.value = ''">
+          <mat-icon aria-hidden="true">save</mat-icon>
+          Save Key
+        </button>
+
+        @if (apiKeyConfigured()) {
+          <button mat-stroked-button type="button" (click)="clearGroqApiKey()">
+            <mat-icon aria-hidden="true">delete</mat-icon>
+            Clear
+          </button>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+
   <section class="input-grid" aria-label="Resume upload and preview">
     <app-upload-resume
       [selectedFileName]="selectedFileName()"

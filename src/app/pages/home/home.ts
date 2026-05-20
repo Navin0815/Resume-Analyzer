@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AnalysisDashboardComponent } from '../../components/analysis-dashboard/analysis-dashboard';
@@ -22,7 +24,9 @@ const historyStorageKey = 'ai-resume-analyzer-history';
     LoadingSpinnerComponent,
     MatButtonModule,
     MatCardModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
     MatSnackBarModule,
     ResumePreviewComponent,
     UploadResumeComponent,
@@ -46,6 +50,7 @@ export class HomeComponent {
   protected readonly progress = signal(0);
   protected readonly error = signal<string | null>(null);
   protected readonly history = signal<ResumeHistoryItem[]>(this.loadHistory());
+  protected readonly apiKeyConfigured = signal(this.aiService.hasApiKey());
 
   async analyzeFile(file: File): Promise<void> {
     if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
@@ -84,6 +89,24 @@ export class HomeComponent {
     }
 
     void this.analyzeFile(this.lastSelectedFile);
+  }
+
+  protected saveGroqApiKey(apiKey: string): void {
+    try {
+      this.aiService.saveBrowserApiKey(apiKey);
+      this.apiKeyConfigured.set(true);
+      this.error.set(null);
+      this.snackBar.open('Groq API key saved in this browser.', 'Close', { duration: 3000 });
+    } catch (error) {
+      const message = this.toUserFriendlyError(error);
+      this.snackBar.open(message, 'Close', { duration: 4000 });
+    }
+  }
+
+  protected clearGroqApiKey(): void {
+    this.aiService.clearBrowserApiKey();
+    this.apiKeyConfigured.set(this.aiService.hasApiKey());
+    this.snackBar.open('Saved Groq API key cleared from this browser.', 'Close', { duration: 3000 });
   }
 
   protected restoreHistory(item: ResumeHistoryItem): void {

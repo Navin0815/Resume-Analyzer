@@ -23,23 +23,49 @@ export class AiService {
   private readonly endpoint = 'https://api.groq.com/openai/v1/chat/completions';
   private readonly model = 'llama-3.3-70b-versatile';
   private readonly maxResumeCharacters = 24000;
+  private readonly browserApiKeyStorageKey = 'ai-resume-analyzer-groq-key';
+
+  hasApiKey(): boolean {
+    return Boolean(this.getApiKey());
+  }
+
+  saveBrowserApiKey(apiKey: string): void {
+    const cleanApiKey = apiKey.trim();
+
+    if (!cleanApiKey) {
+      throw new Error('Please enter a valid Groq API key.');
+    }
+
+    if (!this.hasLocalStorage()) {
+      throw new Error('This browser cannot save the API key. Please enable local storage.');
+    }
+
+    localStorage.setItem(this.browserApiKeyStorageKey, cleanApiKey);
+  }
+
+  clearBrowserApiKey(): void {
+    if (this.hasLocalStorage()) {
+      localStorage.removeItem(this.browserApiKeyStorageKey);
+    }
+  }
 
   async analyzeResume(resumeText: string): Promise<ResumeAnalysis> {
     const cleanResumeText = this.prepareResumeText(resumeText);
+    const apiKey = this.getApiKey();
 
     if (!cleanResumeText) {
       throw new Error('No readable resume text was found in the uploaded PDF.');
     }
 
-    if (!environment.groqApiKey || environment.groqApiKey === 'YOUR_GROQ_API_KEY') {
-      throw new Error('Groq API key is missing. Add it to src/environments/environment.ts.');
+    if (!apiKey) {
+      throw new Error('Groq API key is missing. Add it in the API key setup panel and try again.');
     }
 
     try {
       const response = await fetch(this.endpoint, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${environment.groqApiKey}`,
+          Authorization: `Bearer ${apiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -121,6 +147,24 @@ ${resumeText}`;
     }
 
     return cleanResumeText.slice(0, this.maxResumeCharacters);
+  }
+
+  private getApiKey(): string {
+    const environmentApiKey = environment.groqApiKey?.trim();
+
+    if (environmentApiKey && environmentApiKey !== 'YOUR_GROQ_API_KEY') {
+      return environmentApiKey;
+    }
+
+    if (!this.hasLocalStorage()) {
+      return '';
+    }
+
+    return localStorage.getItem(this.browserApiKeyStorageKey)?.trim() ?? '';
+  }
+
+  private hasLocalStorage(): boolean {
+    return typeof localStorage !== 'undefined';
   }
 
   private async toFriendlyApiError(response: Response): Promise<string> {

@@ -71,7 +71,7 @@ npm install @angular/material @angular/cdk @angular/animations pdfjs-dist jspdf
 ## Groq API Configuration
 
 1. Create a GroqCloud API key from the Groq console.
-2. Open `src/environments/environment.ts`.
+2. For local development, open `src/environments/environment.ts`.
 3. Add your key:
 
 ```ts
@@ -82,6 +82,8 @@ export const environment = {
 ```
 
 For production deployments, use a backend proxy or serverless function to protect the API key. This academic/demo project keeps the key in Angular environment config for clarity.
+
+For the public GitHub Pages demo, use the in-app `GroqCloud setup` card. Paste your key there and it will be stored only in your browser local storage.
 
 ## Run the App
 
