@@ -1,0 +1,69 @@
+<mat-card class="score-card">
+  <mat-card-header>
+    <mat-card-title class="job-title">
+      <mat-icon>assessment</mat-icon>
+      {{ jobTitle() }}
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <!-- Overall Score -->
+    <div class="overall-score-section">
+      <div class="score-circle" [attr.data-score]="overallScore()">
+        <div class="score-value">{{ overallScore() }}</div>
+        <div class="score-label">Overall</div>
+      </div>
+      <div class="score-status">
+        <p class="status-text">
+          <mat-icon [matTooltip]="getScoreStatus(overallScore())">{{ getScoreIcon(overallScore()) }}</mat-icon>
+          {{ getScoreStatus(overallScore()) }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Individual Scores -->
+    <div class="individual-scores">
+      <!-- Resume Match Score -->
+      <div class="score-item">
+        <div class="score-header">
+          <span class="score-label">Resume Match Score</span>
+          <span class="score-value">{{ resumeMatchPercentage() }}%</span>
+        </div>
+        <mat-progress-bar
+          [color]="getScoreColor(resumeMatchPercentage())"
+          mode="determinate"
+          [value]="resumeMatchPercentage()"
+        ></mat-progress-bar>
+        <p class="score-description">How well your resume aligns with job requirements</p>
+      </div>
+
+      <!-- ATS Compatibility Score -->
+      <div class="score-item">
+        <div class="score-header">
+          <span class="score-label">ATS Compatibility Score</span>
+          <span class="score-value">{{ atsCompatibilityScore() }}%</span>
+        </div>
+        <mat-progress-bar
+          [color]="getScoreColor(atsCompatibilityScore())"
+          mode="determinate"
+          [value]="atsCompatibilityScore()"
+        ></mat-progress-bar>
+        <p class="score-description">How ATS-friendly your resume formatting is</p>
+      </div>
+
+      <!-- Skill Match Score -->
+      <div class="score-item">
+        <div class="score-header">
+          <span class="score-label">Skill Match Score</span>
+          <span class="score-value">{{ skillMatchPercentage() }}%</span>
+        </div>
+        <mat-progress-bar
+          [color]="getScoreColor(skillMatchPercentage())"
+          mode="determinate"
+          [value]="skillMatchPercentage()"
+        ></mat-progress-bar>
+        <p class="score-description">Match percentage of technical skills and competencies</p>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

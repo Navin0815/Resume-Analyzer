@@ -1,0 +1,70 @@
+<mat-card class="missing-skills-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>assignment_late</mat-icon>
+      Missing Skills & Gaps
+    </mat-card-title>
+    <mat-card-subtitle> Skills and competencies needed for this position </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (missingSkills().length === 0) {
+      <div class="no-skills-message">
+        <mat-icon>check_circle</mat-icon>
+        <p>Excellent! Your resume matches the required skills for this position.</p>
+      </div>
+    } @else {
+      <!-- Grouped by category -->
+      @for (category of getCategories(); track category) {
+        <div class="skill-category">
+          <div class="category-header">
+            <mat-icon>{{ getCategoryIcon(category) }}</mat-icon>
+            <span class="category-name">{{ category | titlecase }}</span>
+            <span class="skill-count">{{ getSkillsByCategory(category).length }}</span>
+          </div>
+
+          <div class="skills-list">
+            @for (skill of getSkillsByCategory(category); track skill.skill) {
+              <div class="skill-item" [class.critical]="skill.severity === 'critical'">
+                <div class="skill-header">
+                  <div class="skill-name-section">
+                    <mat-icon class="severity-icon" [attr.data-severity]="skill.severity">
+                      {{ getSeverityIcon(skill.severity) }}
+                    </mat-icon>
+                    <span class="skill-name">{{ skill.skill }}</span>
+                    <mat-chip-set>
+                      <mat-chip [color]="getSeverityColor(skill.severity)" selected>
+                        {{ skill.severity | uppercase }}
+                      </mat-chip>
+                    </mat-chip-set>
+                  </div>
+                </div>
+                <p class="skill-suggestion">{{ skill.suggestion }}</p>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- Summary stats -->
+      <div class="gap-summary">
+        <div class="stat">
+          <span class="stat-number">{{ missingSkills().length }}</span>
+          <span class="stat-label">Total Gaps</span>
+        </div>
+        <div class="stat critical">
+          <span class="stat-number">{{ missingSkills().filter((s) => s.severity === 'critical').length }}</span>
+          <span class="stat-label">Critical</span>
+        </div>
+        <div class="stat high">
+          <span class="stat-number">{{ missingSkills().filter((s) => s.severity === 'high').length }}</span>
+          <span class="stat-label">High</span>
+        </div>
+        <div class="stat medium">
+          <span class="stat-number">{{ missingSkills().filter((s) => s.severity === 'medium').length }}</span>
+          <span class="stat-label">Medium</span>
+        </div>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

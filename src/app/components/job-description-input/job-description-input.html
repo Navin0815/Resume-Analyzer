@@ -1,0 +1,86 @@
+<mat-card class="jd-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon class="title-icon">work</mat-icon>
+      Paste or Upload Job Description
+    </mat-card-title>
+    <mat-card-subtitle>
+      Provide the job description to compare with your resume
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <!-- Drag & Drop Zone -->
+    <div
+      class="drag-drop-zone"
+      [class.drag-over]="dragOver()"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event)"
+    >
+      <mat-icon class="drop-icon">cloud_upload</mat-icon>
+      <p class="drop-text">Drag & drop PDF, TXT, or DOCX file here</p>
+      <p class="drop-subtext">or</p>
+      <button mat-raised-button color="primary" type="button" (click)="triggerFileInput()" [disabled]="isLoading()">
+        <mat-icon>upload_file</mat-icon>
+        Browse Files
+      </button>
+    </div>
+
+    <!-- Textarea for direct input -->
+    <div class="textarea-container">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Job Description</mat-label>
+        <textarea
+          matInput
+          placeholder="Paste the job description here..."
+          rows="10"
+          [value]="jdText()"
+          (input)="onTextareaInput($event)"
+          [disabled]="isLoading()"
+        ></textarea>
+        <mat-hint align="end">{{ characterCount() }} / {{ maxCharacters }} characters</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <!-- Character Count & Validation -->
+    <div class="validation-info">
+      <div class="char-count">
+        <span class="label">Character Count:</span>
+        <span class="value" [class.valid]="isValidLength()" [class.invalid]="!isValidLength()">
+          {{ characterCount() }} / {{ maxCharacters }}
+        </span>
+      </div>
+      @if (characterCount() < minCharacters) {
+        <div class="error-message">
+          <mat-icon>error</mat-icon>
+          Minimum {{ minCharacters }} characters required. ({{ minCharacters - characterCount() }} more needed)
+        </div>
+      }
+      @if (characterCount() > maxCharacters) {
+        <div class="error-message">
+          <mat-icon>error</mat-icon>
+          Maximum {{ maxCharacters }} characters allowed. ({{ characterCount() - maxCharacters }} over)
+        </div>
+      }
+      @if (isValidLength() && characterCount() > 0) {
+        <div class="success-message">
+          <mat-icon>check_circle</mat-icon>
+          Job description is ready for analysis
+        </div>
+      }
+    </div>
+
+    <!-- Loading state -->
+    @if (isLoading()) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+  </mat-card-content>
+
+  <mat-card-footer class="button-footer">
+    <p class="footer-hint">
+      <mat-icon>info</mat-icon>
+      Paste the complete job description for best results
+    </p>
+  </mat-card-footer>
+</mat-card>

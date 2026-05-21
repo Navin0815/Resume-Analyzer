@@ -1,0 +1,251 @@
+@if (atsScore()) {
+  <div class="dashboard-container">
+    <!-- Top Summary Cards -->
+    <div class="summary-grid">
+      <mat-card class="summary-card">
+        <mat-card-content>
+          <div class="summary-item">
+            <mat-icon class="icon matched">check_circle</mat-icon>
+            <div class="summary-text">
+              <p class="summary-value">{{ getMatchedSkillsCount() }}</p>
+              <p class="summary-label">Matched Skills</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="summary-card">
+        <mat-card-content>
+          <div class="summary-item">
+            <mat-icon class="icon missing">warning</mat-icon>
+            <div class="summary-text">
+              <p class="summary-value">{{ getMissingSkillsCount() }}</p>
+              <p class="summary-label">Missing Skills</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="summary-card">
+        <mat-card-content>
+          <div class="summary-item">
+            <mat-icon class="icon issues">info</mat-icon>
+            <div class="summary-text">
+              <p class="summary-value">{{ getAtsIssuesCount() }}</p>
+              <p class="summary-label">ATS Issues</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Detailed Results Tabs -->
+    <mat-tab-group class="results-tabs">
+      <!-- Scores Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>assessment</mat-icon>
+          <span>Scores & Analysis</span>
+        </ng-template>
+
+        <div class="tab-content">
+          <app-ats-score-card
+            [resumeMatchPercentage]="atsScore()!.resumeMatchPercentage || 0"
+            [atsCompatibilityScore]="atsScore()!.atsCompatibilityScore || 0"
+            [skillMatchPercentage]="atsScore()!.skillMatchPercentage || 0"
+            [jobTitle]="atsScore()!.jobTitle"
+          ></app-ats-score-card>
+
+          <!-- Matched Keywords -->
+          <mat-card class="analysis-card">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>label</mat-icon>
+                Matched Keywords
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              @if (atsScore()!.details.matchedKeywords.length > 0) {
+                <div class="keywords-display">
+                  @for (keyword of atsScore()!.details.matchedKeywords; track keyword) {
+                    <mat-chip>{{ keyword }}</mat-chip>
+                  }
+                </div>
+              } @else {
+                <p class="no-data">No matched keywords found.</p>
+              }
+            </mat-card-content>
+          </mat-card>
+
+          <!-- Missing Keywords -->
+          <mat-card class="analysis-card">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>label_important</mat-icon>
+                Missing Keywords
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              @if (atsScore()!.details.missingKeywords.length > 0) {
+                <div class="keywords-display">
+                  @for (keyword of atsScore()!.details.missingKeywords; track keyword) {
+                    <mat-chip color="warn">{{ keyword }}</mat-chip>
+                  }
+                </div>
+              } @else {
+                <p class="success-message">All key keywords are covered!</p>
+              }
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+      <!-- Skills Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>build</mat-icon>
+          <span>Skills</span>
+        </ng-template>
+
+        <div class="tab-content">
+          <!-- Matched Skills -->
+          <mat-card class="analysis-card">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>done_all</mat-icon>
+                Matched Skills
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              @if (atsScore()!.details.matchedSkills.length > 0) {
+                <div class="skills-list">
+                  @for (skill of atsScore()!.details.matchedSkills; track skill) {
+                    <div class="skill-badge success">{{ skill }}</div>
+                  }
+                </div>
+              } @else {
+                <p class="no-data">No matched skills identified.</p>
+              }
+            </mat-card-content>
+          </mat-card>
+
+          <!-- Missing Skills Component -->
+          <app-missing-skills [missingSkills]="atsScore()!.details.missingSkills"></app-missing-skills>
+        </div>
+      </mat-tab>
+
+      <!-- ATS Recommendations Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>lightbulb</mat-icon>
+          <span>ATS Recommendations</span>
+        </ng-template>
+
+        <div class="tab-content">
+          <!-- ATS Issues -->
+          <mat-card class="analysis-card issues-card">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>error</mat-icon>
+                ATS Issues Found
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              @if (atsScore()!.details.atsIssues.length > 0) {
+                <ul class="issues-list">
+                  @for (issue of atsScore()!.details.atsIssues; track issue) {
+                    <li class="issue-item">
+                      <mat-icon>error_outline</mat-icon>
+                      {{ issue }}
+                    </li>
+                  }
+                </ul>
+              } @else {
+                <p class="success-message">
+                  <mat-icon>check_circle</mat-icon>
+                  No ATS issues detected!
+                </p>
+              }
+            </mat-card-content>
+          </mat-card>
+
+          <!-- ATS Recommendations -->
+          <mat-card class="analysis-card recommendations-card">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>recommend</mat-icon>
+                Optimization Recommendations
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              @if (atsScore()!.details.atsRecommendations.length > 0) {
+                <ul class="recommendations-list">
+                  @for (rec of atsScore()!.details.atsRecommendations; track rec) {
+                    <li class="recommendation-item">
+                      <mat-icon>thumb_up</mat-icon>
+                      {{ rec }}
+                    </li>
+                  }
+                </ul>
+              } @else {
+                <p class="success-message">
+                  <mat-icon>check_circle</mat-icon>
+                  No recommendations needed!
+                </p>
+              }
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+      <!-- Optimized Resume Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>edit_document</mat-icon>
+          <span>Optimized Resume</span>
+        </ng-template>
+
+        <div class="tab-content">
+          <app-optimized-resume
+            [optimizedResume]="atsScore()!.optimizedResume"
+            [resumeText]="atsScore()!.details.resumeText"
+            (downloadClicked)="downloadOptimizedClicked.emit()"
+          ></app-optimized-resume>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button mat-raised-button color="primary" (click)="downloadAnalysisClicked.emit()">
+        <mat-icon>download</mat-icon>
+        Export Full Analysis PDF
+      </button>
+      <button mat-stroked-button (click)="downloadOptimizedClicked.emit()">
+        <mat-icon>download</mat-icon>
+        Download Optimized Resume
+      </button>
+    </div>
+  </div>
+}
+
+@if (!atsScore() && !isLoading()) {
+  <mat-card class="empty-state">
+    <mat-card-content>
+      <mat-icon class="empty-icon">info</mat-icon>
+      <h3>No comparison results yet</h3>
+      <p>Upload a resume, provide a job description, and click "Compare" to see detailed ATS analysis.</p>
+    </mat-card-content>
+  </mat-card>
+}
+
+@if (isLoading()) {
+  <mat-card class="loading-state">
+    <mat-card-content>
+      <div class="spinner">
+        <mat-icon class="spinner-icon">hourglass_empty</mat-icon>
+        <p>Analyzing resume against job description...</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+}

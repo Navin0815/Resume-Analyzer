@@ -1,0 +1,432 @@
+.history-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  mat-card-header {
+    margin-bottom: 1.5rem;
+
+    mat-card-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      mat-icon {
+        color: #2196f3;
+      }
+    }
+  }
+
+  mat-card-content {
+    padding: 1.5rem;
+  }
+}
+
+.empty-history {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  text-align: center;
+
+  mat-icon {
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+    color: #ccc;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: #999;
+    margin: 0.5rem 0;
+    font-size: 1rem;
+
+    &.subtitle {
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+  }
+}
+
+.history-table-container {
+  overflow-x: auto;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+}
+
+.history-table {
+  width: 100%;
+
+  th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+    color: #333;
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 2px solid #e0e0e0;
+  }
+
+  td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &.selected {
+      background-color: #e3f2fd;
+      color: #1976d2;
+      font-weight: 500;
+    }
+  }
+
+  tr {
+    &:hover td {
+      background-color: #fafafa;
+    }
+
+    &.selected-row {
+      background-color: #e3f2fd;
+
+      td {
+        background-color: #e3f2fd;
+        color: #1976d2;
+      }
+    }
+  }
+}
+
+.score-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: conic-gradient(#4caf50 0deg, #4caf50 360deg);
+  color: white;
+  font-weight: bold;
+  font-size: 0.9rem;
+
+  &[data-score='100'],
+  &[data-score='99'],
+  &[data-score='98'],
+  &[data-score='97'],
+  &[data-score='96'],
+  &[data-score='95'],
+  &[data-score='94'],
+  &[data-score='93'],
+  &[data-score='92'],
+  &[data-score='91'],
+  &[data-score='90'],
+  &[data-score='89'],
+  &[data-score='88'],
+  &[data-score='87'],
+  &[data-score='86'],
+  &[data-score='85'],
+  &[data-score='84'],
+  &[data-score='83'],
+  &[data-score='82'],
+  &[data-score='81'],
+  &[data-score='80'] {
+    background: conic-gradient(#4caf50 0deg, #4caf50 360deg);
+  }
+
+  &[data-score='79'],
+  &[data-score='78'],
+  &[data-score='77'],
+  &[data-score='76'],
+  &[data-score='75'],
+  &[data-score='74'],
+  &[data-score='73'],
+  &[data-score='72'],
+  &[data-score='71'],
+  &[data-score='70'],
+  &[data-score='69'],
+  &[data-score='68'],
+  &[data-score='67'],
+  &[data-score='66'],
+  &[data-score='65'],
+  &[data-score='64'],
+  &[data-score='63'],
+  &[data-score='62'],
+  &[data-score='61'],
+  &[data-score='60'] {
+    background: conic-gradient(#2196f3 0deg, #2196f3 360deg);
+  }
+
+  &[data-score='59'],
+  &[data-score='58'],
+  &[data-score='57'],
+  &[data-score='56'],
+  &[data-score='55'],
+  &[data-score='54'],
+  &[data-score='53'],
+  &[data-score='52'],
+  &[data-score='51'],
+  &[data-score='50'],
+  &[data-score='49'],
+  &[data-score='48'],
+  &[data-score='47'],
+  &[data-score='46'],
+  &[data-score='45'],
+  &[data-score='44'],
+  &[data-score='43'],
+  &[data-score='42'],
+  &[data-score='41'],
+  &[data-score='40'] {
+    background: conic-gradient(#ff9800 0deg, #ff9800 360deg);
+  }
+
+  &[data-score='39'],
+  &[data-score='38'],
+  &[data-score='37'],
+  &[data-score='36'],
+  &[data-score='35'],
+  &[data-score='34'],
+  &[data-score='33'],
+  &[data-score='32'],
+  &[data-score='31'],
+  &[data-score='30'],
+  &[data-score='29'],
+  &[data-score='28'],
+  &[data-score='27'],
+  &[data-score='26'],
+  &[data-score='25'],
+  &[data-score='24'],
+  &[data-score='23'],
+  &[data-score='22'],
+  &[data-score='21'],
+  &[data-score='20'] {
+    background: conic-gradient(#f44336 0deg, #f44336 360deg);
+  }
+}
+
+.progress-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 120px;
+
+  mat-progress-bar {
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+  }
+
+  span {
+    font-weight: 600;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    min-width: 35px;
+  }
+}
+
+.date-text {
+  font-size: 0.85rem;
+  color: #999;
+}
+
+button[mat-icon-button] {
+  margin: 0 0.25rem;
+}
+
+:host-context(.dark-theme) {
+  .empty-history {
+    mat-icon {
+      color: #666;
+    }
+
+    p {
+      color: #666;
+
+      &.subtitle {
+        color: #555;
+      }
+    }
+  }
+
+  .history-table-container {
+    border-color: #444;
+  }
+
+  .history-table {
+    th {
+      background-color: #333;
+      color: #e0e0e0;
+      border-bottom-color: #444;
+    }
+
+    td {
+      border-bottom-color: #444;
+      color: #b0bec5;
+
+      &.selected {
+        background-color: #1a237e;
+        color: #64b5f6;
+      }
+    }
+
+    tr {
+      &:hover td {
+        background-color: #333;
+      }
+
+      &.selected-row {
+        background-color: #1a237e;
+
+        td {
+          background-color: #1a237e;
+          color: #64b5f6;
+        }
+      }
+    }
+  }
+
+  .score-badge {
+    &[data-score='100'],
+    &[data-score='99'],
+    &[data-score='98'],
+    &[data-score='97'],
+    &[data-score='96'],
+    &[data-score='95'],
+    &[data-score='94'],
+    &[data-score='93'],
+    &[data-score='92'],
+    &[data-score='91'],
+    &[data-score='90'],
+    &[data-score='89'],
+    &[data-score='88'],
+    &[data-score='87'],
+    &[data-score='86'],
+    &[data-score='85'],
+    &[data-score='84'],
+    &[data-score='83'],
+    &[data-score='82'],
+    &[data-score='81'],
+    &[data-score='80'] {
+      background: conic-gradient(#66bb6a 0deg, #66bb6a 360deg);
+    }
+
+    &[data-score='79'],
+    &[data-score='78'],
+    &[data-score='77'],
+    &[data-score='76'],
+    &[data-score='75'],
+    &[data-score='74'],
+    &[data-score='73'],
+    &[data-score='72'],
+    &[data-score='71'],
+    &[data-score='70'],
+    &[data-score='69'],
+    &[data-score='68'],
+    &[data-score='67'],
+    &[data-score='66'],
+    &[data-score='65'],
+    &[data-score='64'],
+    &[data-score='63'],
+    &[data-score='62'],
+    &[data-score='61'],
+    &[data-score='60'] {
+      background: conic-gradient(#64b5f6 0deg, #64b5f6 360deg);
+    }
+
+    &[data-score='59'],
+    &[data-score='58'],
+    &[data-score='57'],
+    &[data-score='56'],
+    &[data-score='55'],
+    &[data-score='54'],
+    &[data-score='53'],
+    &[data-score='52'],
+    &[data-score='51'],
+    &[data-score='50'],
+    &[data-score='49'],
+    &[data-score='48'],
+    &[data-score='47'],
+    &[data-score='46'],
+    &[data-score='45'],
+    &[data-score='44'],
+    &[data-score='43'],
+    &[data-score='42'],
+    &[data-score='41'],
+    &[data-score='40'] {
+      background: conic-gradient(#ffb74d 0deg, #ffb74d 360deg);
+    }
+
+    &[data-score='39'],
+    &[data-score='38'],
+    &[data-score='37'],
+    &[data-score='36'],
+    &[data-score='35'],
+    &[data-score='34'],
+    &[data-score='33'],
+    &[data-score='32'],
+    &[data-score='31'],
+    &[data-score='30'],
+    &[data-score='29'],
+    &[data-score='28'],
+    &[data-score='27'],
+    &[data-score='26'],
+    &[data-score='25'],
+    &[data-score='24'],
+    &[data-score='23'],
+    &[data-score='22'],
+    &[data-score='21'],
+    &[data-score='20'] {
+      background: conic-gradient(#ef5350 0deg, #ef5350 360deg);
+    }
+  }
+
+  .date-text {
+    color: #666;
+  }
+}
+
+@media (max-width: 1024px) {
+  .history-table {
+    ng-container:nth-child(n + 5) {
+      display: none;
+    }
+  }
+
+  .displayedColumns {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .history-table-container {
+    overflow-x: auto;
+  }
+
+  .history-table {
+    font-size: 0.85rem;
+
+    th,
+    td {
+      padding: 0.75rem;
+    }
+  }
+
+  .progress-badge {
+    flex-direction: column;
+    gap: 0.25rem;
+
+    mat-progress-bar {
+      width: 100%;
+      height: 3px;
+    }
+
+    span {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}

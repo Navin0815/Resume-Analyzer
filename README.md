@@ -1,6 +1,6 @@
 # AI Resume Analyzer
 
-AI Resume Analyzer is a modern Angular dashboard app that uploads PDF resumes, extracts readable text with `pdfjs-dist`, sends the resume content to GroqCloud, and displays a professional analysis report.
+AI Resume Analyzer is now a modern Angular ATS Resume Optimizer that uploads PDF resumes, extracts readable text with `pdfjs-dist`, compares the resume against a job description, sends both to GroqCloud, and displays a professional optimization report.
 
 ## Features
 
@@ -10,11 +10,18 @@ AI Resume Analyzer is a modern Angular dashboard app that uploads PDF resumes, e
 - GroqCloud chat completions API integration
 - Resume score and ATS score dashboards
 - Technical skills found, missing keywords, ATS tips, improvements, career suggestions, strengths, and weaknesses
+- Job description paste area and optional JD upload support
+- Resume vs job description comparison with match, ATS, and skill scores
+- Missing skill and keyword gap detection
+- AI resume rewriting and optimized content generation
+- Multi-job comparison history in browser storage
 - Resume text preview
 - Dark mode toggle
 - Recent resume analysis history in browser storage
 - Copy suggestions button
 - Download analysis report as PDF
+- Download ATS comparison report as PDF
+- Download optimized resume content
 - Responsive Angular Material dashboard UI
 
 ## Tech Stack
@@ -33,8 +40,14 @@ AI Resume Analyzer is a modern Angular dashboard app that uploads PDF resumes, e
 src/app/
   components/
     analysis-dashboard/
+    ats-score-card/
     footer/
+    jd-comparison-dashboard/
+    job-description-input/
     loading-spinner/
+    missing-skills/
+    multi-job-history/
+    optimized-resume/
     navbar/
     resume-preview/
     score-card/
@@ -44,7 +57,9 @@ src/app/
   pages/
     home/
   services/
+    ats.service.ts
     ai.service.ts
+    jd-analysis.service.ts
     pdf.service.ts
     report.service.ts
   app.config.ts
@@ -133,9 +148,10 @@ The output is written to `dist/ai-resume-analyzer/`.
 1. The user uploads a PDF resume.
 2. `PdfService` validates the file and extracts readable text from each PDF page.
 3. `AiService` sends the extracted text to GroqCloud with a structured resume-analysis prompt.
-4. Groq returns JSON with scores, skills, ATS tips, recommendations, and career guidance.
-5. `AnalysisDashboardComponent` presents the results in a responsive Material dashboard.
-6. `ReportService` can export the analysis as a PDF report.
+4. `JdAnalysisService` extracts job requirements from pasted or uploaded job descriptions.
+5. `AtsService` compares the resume against the job description, calculates match scores, and generates optimized resume content.
+6. `JdComparisonDashboardComponent` presents the ATS analysis in a responsive Material dashboard.
+7. `ReportService` can export both the resume analysis and ATS comparison as PDF reports.
 
 ## Verification
 

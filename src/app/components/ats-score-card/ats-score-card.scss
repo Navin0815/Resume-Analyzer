@@ -1,0 +1,311 @@
+.score-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  mat-card-header {
+    margin-bottom: 1.5rem;
+
+    .job-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      mat-icon {
+        color: #2196f3;
+      }
+    }
+  }
+
+  mat-card-content {
+    padding: 1.5rem;
+  }
+}
+
+.overall-score-section {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(33, 150, 243, 0.05) 0%, rgba(76, 175, 80, 0.05) 100%);
+  border-radius: 8px;
+
+  .score-circle {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: conic-gradient(
+      #4caf50 0deg,
+      #4caf50 calc(var(--score, 75) * 3.6deg),
+      #e0e0e0 calc(var(--score, 75) * 3.6deg),
+      #e0e0e0 360deg
+    );
+    flex-shrink: 0;
+
+    &[data-score='100'],
+    &[data-score='99'],
+    &[data-score='98'],
+    &[data-score='97'],
+    &[data-score='96'],
+    &[data-score='95'],
+    &[data-score='94'],
+    &[data-score='93'],
+    &[data-score='92'],
+    &[data-score='91'],
+    &[data-score='90'],
+    &[data-score='89'],
+    &[data-score='88'],
+    &[data-score='87'],
+    &[data-score='86'],
+    &[data-score='85'],
+    &[data-score='84'],
+    &[data-score='83'],
+    &[data-score='82'],
+    &[data-score='81'],
+    &[data-score='80'] {
+      background: conic-gradient(#4caf50 0deg, #4caf50 360deg);
+    }
+
+    &[data-score='79'],
+    &[data-score='78'],
+    &[data-score='77'],
+    &[data-score='76'],
+    &[data-score='75'],
+    &[data-score='74'],
+    &[data-score='73'],
+    &[data-score='72'],
+    &[data-score='71'],
+    &[data-score='70'],
+    &[data-score='69'],
+    &[data-score='68'],
+    &[data-score='67'],
+    &[data-score='66'],
+    &[data-score='65'],
+    &[data-score='64'],
+    &[data-score='63'],
+    &[data-score='62'],
+    &[data-score='61'],
+    &[data-score='60'] {
+      background: conic-gradient(#2196f3 0deg, #2196f3 360deg);
+    }
+
+    &[data-score='59'],
+    &[data-score='58'],
+    &[data-score='57'],
+    &[data-score='56'],
+    &[data-score='55'],
+    &[data-score='54'],
+    &[data-score='53'],
+    &[data-score='52'],
+    &[data-score='51'],
+    &[data-score='50'],
+    &[data-score='49'],
+    &[data-score='48'],
+    &[data-score='47'],
+    &[data-score='46'],
+    &[data-score='45'],
+    &[data-score='44'],
+    &[data-score='43'],
+    &[data-score='42'],
+    &[data-score='41'],
+    &[data-score='40'] {
+      background: conic-gradient(#ff9800 0deg, #ff9800 360deg);
+    }
+
+    &[data-score='39'],
+    &[data-score='38'],
+    &[data-score='37'],
+    &[data-score='36'],
+    &[data-score='35'],
+    &[data-score='34'],
+    &[data-score='33'],
+    &[data-score='32'],
+    &[data-score='31'],
+    &[data-score='30'],
+    &[data-score='29'],
+    &[data-score='28'],
+    &[data-score='27'],
+    &[data-score='26'],
+    &[data-score='25'],
+    &[data-score='24'],
+    &[data-score='23'],
+    &[data-score='22'],
+    &[data-score='21'],
+    &[data-score='20'] {
+      background: conic-gradient(#f44336 0deg, #f44336 360deg);
+    }
+
+    .score-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #333;
+      z-index: 1;
+    }
+
+    .score-label {
+      font-size: 0.75rem;
+      color: #666;
+      font-weight: 500;
+      z-index: 1;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: white;
+      z-index: 0;
+    }
+  }
+
+  .score-status {
+    flex: 1;
+
+    .status-text {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #333;
+      margin: 0;
+
+      mat-icon {
+        color: #2196f3;
+      }
+    }
+  }
+}
+
+.individual-scores {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .score-item {
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    border-left: 4px solid #2196f3;
+
+    .score-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+
+      .score-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .score-value {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #2196f3;
+      }
+    }
+
+    mat-progress-bar {
+      height: 6px;
+      border-radius: 3px;
+      margin-bottom: 0.5rem;
+    }
+
+    .score-description {
+      font-size: 0.8rem;
+      color: #666;
+      margin: 0.5rem 0 0 0;
+    }
+  }
+}
+
+:host-context(.dark-theme) {
+  .overall-score-section {
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(76, 175, 80, 0.1) 100%);
+
+    .score-circle {
+      .score-value {
+        color: #e0e0e0;
+      }
+
+      .score-label {
+        color: #999;
+      }
+
+      &::before {
+        background: #2a2a2a;
+      }
+    }
+
+    .score-status {
+      .status-text {
+        color: #e0e0e0;
+      }
+    }
+  }
+
+  .individual-scores {
+    .score-item {
+      background-color: #333;
+      border-left-color: #64b5f6;
+
+      .score-header {
+        .score-label {
+          color: #e0e0e0;
+        }
+
+        .score-value {
+          color: #64b5f6;
+        }
+      }
+
+      .score-description {
+        color: #999;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .overall-score-section {
+    flex-direction: column;
+    gap: 1rem;
+
+    .score-circle {
+      width: 100px;
+      height: 100px;
+
+      .score-value {
+        font-size: 1.5rem;
+      }
+
+      &::before {
+        width: 90px;
+        height: 90px;
+      }
+    }
+  }
+
+  .individual-scores {
+    gap: 1rem;
+
+    .score-item {
+      padding: 0.75rem;
+    }
+  }
+}

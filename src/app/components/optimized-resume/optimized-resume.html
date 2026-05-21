@@ -1,0 +1,117 @@
+<mat-card class="optimized-resume-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>edit_document</mat-icon>
+      AI-Optimized Resume
+    </mat-card-title>
+    <mat-card-subtitle> Resume rewritten to match job requirements and ATS optimization </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <!-- Professional Summary Section -->
+    <div class="resume-section">
+      <div class="section-header">
+        <h3 class="section-title">Professional Summary</h3>
+        <button mat-icon-button matTooltip="Copy to clipboard" (click)="copySummary()">
+          <mat-icon>content_copy</mat-icon>
+        </button>
+      </div>
+      <div class="content-box summary">
+        <p>{{ optimizedResume().summary }}</p>
+      </div>
+    </div>
+
+    <!-- Optimized Bullet Points -->
+    <div class="resume-section">
+      <div class="section-header">
+        <h3 class="section-title">Optimized Achievements</h3>
+        <button mat-icon-button matTooltip="Copy all bullets" (click)="copyBulletPoints()">
+          <mat-icon>content_copy</mat-icon>
+        </button>
+      </div>
+      <ul class="bullet-points">
+        @for (bullet of optimizedResume().bulletPoints; track bullet) {
+          <li class="bullet-item">{{ bullet }}</li>
+        }
+      </ul>
+    </div>
+
+    <!-- Keywords to Add -->
+    <div class="resume-section">
+      <div class="section-header">
+        <h3 class="section-title">Keywords to Incorporate</h3>
+        <button mat-icon-button matTooltip="Copy keywords" (click)="copyKeywords()">
+          <mat-icon>content_copy</mat-icon>
+        </button>
+      </div>
+      <div class="keywords-grid">
+        @for (keyword of optimizedResume().keywordsToAdd; track keyword) {
+          <mat-chip>{{ keyword }}</mat-chip>
+        }
+      </div>
+    </div>
+
+    <!-- Improvement Suggestions -->
+    @if (optimizedResume().improvementSuggestions.length > 0) {
+      <div class="resume-section improvements">
+        <div class="section-header">
+          <h3 class="section-title">Suggested Improvements</h3>
+        </div>
+        <ul class="suggestions-list">
+          @for (suggestion of optimizedResume().improvementSuggestions; track suggestion) {
+            <li class="suggestion-item">
+              <mat-icon>lightbulb</mat-icon>
+              {{ suggestion }}
+            </li>
+          }
+        </ul>
+      </div>
+    }
+
+    <!-- Original vs Optimized Comparison -->
+    @if (optimizedResume().originalVsOptimized.length > 0) {
+      <div class="resume-section comparison">
+        <h3 class="section-title">Before & After Examples</h3>
+        <div class="comparison-container">
+          @for (comp of optimizedResume().originalVsOptimized; track $index) {
+            <div class="comparison-item">
+              <div class="original">
+                <h4>Original</h4>
+                <p>{{ comp.original }}</p>
+              </div>
+              <div class="comparison-arrow">
+                <mat-icon>arrow_forward</mat-icon>
+              </div>
+              <div class="optimized">
+                <h4>Optimized</h4>
+                <p>{{ comp.optimized }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Full ATS Optimized Content -->
+    @if (optimizedResume().atsOptimizedContent) {
+      <div class="resume-section">
+        <div class="section-header">
+          <h3 class="section-title">Full ATS-Optimized Resume</h3>
+          <button mat-icon-button matTooltip="Copy full content" (click)="copyOptimizedContent()">
+            <mat-icon>content_copy</mat-icon>
+          </button>
+        </div>
+        <div class="content-box full-resume">
+          <pre>{{ optimizedResume().atsOptimizedContent }}</pre>
+        </div>
+      </div>
+    }
+  </mat-card-content>
+
+  <mat-card-footer class="button-footer">
+    <button mat-raised-button color="primary" (click)="downloadOptimized()">
+      <mat-icon>download</mat-icon>
+      Download Optimized Resume
+    </button>
+  </mat-card-footer>
+</mat-card>
